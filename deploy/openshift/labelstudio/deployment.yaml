@@ -16,12 +16,10 @@ spec:
     spec:
       containers:
         - name: labelstudio
-          image: heartexlabs/label-studio:1.0.2
+          image: heartexlabs/label-studio:ubi_develop
           imagePullPolicy: Always
           stdin: true
           tty: true
-          command: ["./deploy/wait-for-postgres.sh"]
-          args: ["db", "bash", "/label-studio/deploy/start_label_studio.sh"]
           env:
             - name: DJANGO_DB
               value: default
@@ -29,10 +27,12 @@ spec:
               value: postgres
             - name: POSTGRE_USER
               value: postgres
+            - name: POSTGRE_PASSWORD
+              value: postgres
             - name: POSTGRE_PORT
               value: "5432"
             - name: POSTGRE_HOST
-              value: db
+              value: //postgres host here
           volumeMounts:
             - name: labelstudio-data-vol
               mountPath: /label-studio/data
